@@ -142,7 +142,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div> --}}
                             <div class="text-center">
-                                <a class="small" href="login.html">Sudah punya akun? Login!</a>
+                                <a class="small" href="{{route('login')}}">Sudah punya akun? Login!</a>
                             </div>
                         </div>
                     </div>

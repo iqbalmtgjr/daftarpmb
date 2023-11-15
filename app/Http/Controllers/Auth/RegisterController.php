@@ -74,9 +74,13 @@ class RegisterController extends Controller
     {
         $rand_password = Str::random(6);
         $rand_password = rand(100000, 999999);
+
         $rand_akun = Str::random(20);
 
-        return Pmbakun::create([
+        $rand_ref = Str::random(4);
+        $rand_ref = rand(100000, 999999);
+
+        $akun = Pmbakun::create([
             'pengenal_akun' => $rand_akun,
             'email_akun_siswa' => $data['email_akun_siswa'],
             'kunci_akun_siswa' => Hash::make($rand_password),
@@ -87,20 +91,21 @@ class RegisterController extends Controller
             'daftar_akun' => now()->timestamp,
         ]);
 
-        // return $akun;
+        $siswa = Pmbsiswa::create([
+            'akun_siswa' => $rand_akun,
+            'ref' => $rand_ref,
+            'nis_siswa' => $data['nis_siswa'],
+            'nama_siswa' => $data['nama_siswa'],
+            'hp_siswa' => $data['hp_siswa'],
+        ]);
 
-        // $siswa = Pmbsiswa::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($password),
-        // ]);
+        $prodi = Pmbprodi::create([
+            'prodi_id_siswa' => $rand_akun,
+            'pilihan_satu' => $data['prodi'],
+            'pilihan_dua' => $data['prodi2'],
+            'jalur' => $data['jalur'],
+        ]);
 
-        // $prodi = Pmbprodi::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($password),
-        // ]);
-
-        // return ['akun', 'siswa', 'prodi'];
+        return ['akun', 'siswa', 'prodi'];
     }
 }
