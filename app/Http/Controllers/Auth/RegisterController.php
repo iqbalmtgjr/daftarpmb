@@ -68,7 +68,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \App\Models\Pmbakun
      */
     protected function create(array $data)
     {
@@ -80,7 +80,22 @@ class RegisterController extends Controller
         $rand_ref = Str::random(4);
         $rand_ref = rand(100000, 999999);
 
-        $akun = Pmbakun::create([
+        Pmbsiswa::create([
+            'akun_siswa' => $rand_akun,
+            'ref' => $rand_ref,
+            'nis_siswa' => $data['nis_siswa'],
+            'nama_siswa' => $data['nama_siswa'],
+            'hp_siswa' => $data['hp_siswa'],
+        ]);
+
+        Pmbprodi::create([
+            'prodi_id_siswa' => $rand_akun,
+            'pilihan_satu' => $data['prodi'],
+            'pilihan_dua' => $data['prodi2'],
+            'jalur' => $data['jalur'],
+        ]);
+
+        return Pmbakun::create([
             'pengenal_akun' => $rand_akun,
             'email_akun_siswa' => $data['email_akun_siswa'],
             'kunci_akun_siswa' => Hash::make($rand_password),
@@ -91,21 +106,5 @@ class RegisterController extends Controller
             'daftar_akun' => now()->timestamp,
         ]);
 
-        $siswa = Pmbsiswa::create([
-            'akun_siswa' => $rand_akun,
-            'ref' => $rand_ref,
-            'nis_siswa' => $data['nis_siswa'],
-            'nama_siswa' => $data['nama_siswa'],
-            'hp_siswa' => $data['hp_siswa'],
-        ]);
-
-        $prodi = Pmbprodi::create([
-            'prodi_id_siswa' => $rand_akun,
-            'pilihan_satu' => $data['prodi'],
-            'pilihan_dua' => $data['prodi2'],
-            'jalur' => $data['jalur'],
-        ]);
-
-        return ['akun', 'siswa', 'prodi'];
     }
 }
